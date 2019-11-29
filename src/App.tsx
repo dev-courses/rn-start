@@ -1,11 +1,11 @@
 
 import React from 'react'
 
-import Login from 'src/screens/Login'
+import AppNavigator from 'src/navigation'
 
 const App = () => {
   return (
-    <Login text='Hello Login screen' />
+    <AppNavigator />
   )
 }
 
