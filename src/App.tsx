@@ -2,10 +2,15 @@
 import React from 'react'
 
 import AppNavigator from 'src/navigation'
+import { Provider } from 'react-redux'
+
+import { store } from 'src/store'
 
 const App = () => {
   return (
-    <AppNavigator />
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
   )
 }
 
