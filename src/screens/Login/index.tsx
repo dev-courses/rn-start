@@ -1,6 +1,10 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useCallback } from 'react'
+import { View, Text, TextInput } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
+import Title from 'src/components/auth/Title'
+import Button from 'src/components/auth/Button'
+import login from 'src/api/login'
+
 import styles from './styles'
 
 interface LoginProps {
@@ -8,14 +12,43 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
-  const goBack = () => {
-    navigation.goBack()
-  }
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const label = navigation.getParam('label')
+  const submit = useCallback(async () => {
+    try {
+      const user = await login({ email, password })
+      console.log(user)
+    } catch(e) {
+      console.log(e)
+    }
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text} onPress={goBack}>{label}</Text>
+      <View style={styles.title}>
+        <Title title='Вход' />
+      </View>
+      <TextInput
+        style={styles.input}
+        keyboardType='email-address'
+        placeholder='Email'
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        autoCorrect={false}
+        secureTextEntry={true}
+        placeholder='Password'
+        onChangeText={setPassword}
+      />
+
+      <View style={styles.buttonContainer}>
+        <Button
+          title='Войти'
+          onPress={submit}
+        />
+      </View>
     </View>
   )
 }

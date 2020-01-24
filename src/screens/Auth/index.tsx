@@ -1,24 +1,29 @@
-import React, { Component } from 'react'
-import { View, Button } from 'react-native'
+import React, { useCallback } from 'react'
+import { View } from 'react-native'
 import { NavigationScreenProp } from 'react-navigation'
+import Button from 'src/components/auth/Button'
 import styles from './styles'
 
 interface AuthProps {
   navigation: NavigationScreenProp<any>
 }
 
-class Auth extends Component<AuthProps> {
-  goToLogin = () => {
-    this.props.navigation.navigate('Login', { label: 'Login (back)' })
-  }
+const Auth: React.FC<AuthProps> = ({ navigation }) => {
+  const goToLogin = useCallback(() => {
+    navigation.navigate('Login')
+  }, [])
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button title='Login' onPress={this.goToLogin} />
-      </View>
-    )
-  }
+  const goToSignup = useCallback(() => {
+    navigation.navigate('Signup')
+  }, [])
+
+  return (
+    <View style={styles.container}>
+      <Button title='Регистрация' onPress={goToSignup} />
+      <Button title='Вход' onPress={goToLogin} />
+    </View>
+  )
+
 }
 
 export default Auth
